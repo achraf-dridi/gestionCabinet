@@ -5,6 +5,8 @@ import com.cabinet.gestion.repositories.PatientRepo;
 import com.cabinet.gestion.repositories.RendezVousRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-@RestController
+@Controller
 public class ControllerRendezVous {
 
     @Autowired
@@ -24,6 +26,19 @@ public class ControllerRendezVous {
     @PostMapping(value = "/createrendezvous")
     public void createRendezVous(@RequestBody RendezVous rendezVous){
         rendezVousRepo.save(rendezVous);
+    }
+
+    @GetMapping(value = "/rendezvous")
+    public String rendezVous(Model model) {
+        return "calendar.html";
+    }
+
+
+    @GetMapping(value = "/listerendezvous")
+    @ResponseBody
+    public List<RendezVous> getlisteRendezVous() {
+        List<RendezVous> liste = rendezVousRepo.findAll();
+        return liste;
     }
 
     @GetMapping(value = "/findrendezvousbyday")

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
+  <!-- ======= Styles ====== -->
+  <link rel="stylesheet" href="/css/calendar.css">
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: function(info, successCallback, failureCallback) {
+          // Make an HTTP request to your server to fetch event data
+          fetch('/listerendezvous')
+                  .then(response => response.json())
+                  .then(data => {
+                    var events = data.map( event => ({
+                      title: event.patient.nom + ' ' + event.patient.prénom,
+                      start: event.dateHeureRendezVous,
+                      end: event.dateHeureRendezVous,
+                      // Conditionally set the event color
+                      color: new Date(event.dateHeureRendezVous) < new Date() ? 'red' : 'blue',
+                    }));
+                    successCallback(events);
+                  })
+                  .catch(error => {
+                    console.error('Error fetching event data:', error);
+                    failureCallback(error);
+                  });
+        },
+        selectable: true,
+        select: function(info) {
+          // Handle the selection of a new appointment
+          var title = prompt('Appointment Title:');
+          var patientFirsname = prompt('Patient First Name:'); // Add a patient input field
+          var patientLastname = prompt('Patient Last Name:'); // Add a patient input field
+
+          if (title) {
+            calendar.addEvent({
+              title: title,
+              start: info.start,
+              end: info.end,
+              color: new Date(info.start) < new Date() ? 'red' : 'blue',
+            });
+            // Make an HTTP request to your server to save the new appointment
+            // This is where you'd send the data to your server.
+            // You can use the info object to get the selected date and time.
+          }
+        },
+      });
+
+      calendar.render();
+    });
+
+  </script>
+</head>
+
+<body>
+<!-- =============== Navigation ================ -->
+<div class="container">
+  <div th:include="fragments/navigation.html"></div>
+
+  <!-- ========================= Main ==================== -->
+  <div class="main">
+    <div th:include="fragments/topbar.html"></div>
+
+
+    <!-- ================ Calendar  ================= -->
+    <div class="details">
+      <div class="recentOrders">
+        <div id='calendar'></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========== Scripts =========  -->
+<script src="/js/main.js"></script>
+
+<!-- ====== ionicons ======= -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

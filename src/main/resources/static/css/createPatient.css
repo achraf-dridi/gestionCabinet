@@ -1,0 +1,81 @@
+/* Style de la fenêtre modale de création */
+#createModal {
+    display: none; /* Par défaut, la fenêtre modale est masquée */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Arrière-plan semi-transparent */
+    z-index: 1;
+}
+
+#createModal .modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    top: 40%;
+    left: 50%;
+    width: 30%; /* Ajustez la largeur de la fenêtre modale */
+    margin: 5% auto; /* Centre la fenêtre modale verticalement et horizontalement */
+    padding: 20px;
+    position: absolute;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Increase the box shadow */
+}
+
+#closeCreateModal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+#createModal .modal-content h2 {
+    text-align: center;
+}
+
+#create-patient-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#create-patient-form label {
+    margin-bottom: 10px; /* Increase the margin for labels */
+    font-weight: bold; /* Make labels bold */
+}
+
+#create-patient-form input {
+    margin-bottom: 20px; /* Increase the margin for input fields */
+    padding: 10px; /* Increase the padding for input fields */
+    border: 1px solid #ccc; /* Add a border to input fields */
+    border-radius: 5px; /* Add some border radius */
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[type="button"] {
+    background-color: #ccc;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Assurez-vous d'ajuster les styles de bouton en fonction de votre design global */
+
+#createButtonGroup {
+    display: inline-block; /* Display the buttons in the same line */
+    text-align: center;
+    margin-top: 20px;
+}

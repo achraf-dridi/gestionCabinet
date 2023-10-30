@@ -4,6 +4,7 @@ import com.cabinet.gestion.models.Patient;
 import com.cabinet.gestion.repositories.PatientRepo;
 import com.cabinet.gestion.repositories.RendezVousRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,20 +47,42 @@ public class ControllerPatient {
     }
 
     @GetMapping(value = "/patient/{id}")
+    @ResponseBody
     public Patient getPatient(@PathVariable Long id) {
-        return  patientRepo.findById(id).orElse(null);
+        return patientRepo.findById(id).orElse(null);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public void deletePatient(@PathVariable Long id) {
-        patientRepo.deleteById(id);
+    @DeleteMapping(value = "/deletepatient/{id}")
+    public String deletePatient(@PathVariable Long id, Model model) {
+        // Check if the patient with the given ID exists
+        if (patientRepo.existsById(id)) {
+            patientRepo.deleteById(id);
+        }
+
+        // Fetch the updated patient list
+        List<Patient> updatedPatients = patientRepo.findAll();
+
+        // Update the patient list in the model
+        model.addAttribute("patients", updatedPatients);
+
+        return "redirect:/patients";
     }
 
     @PutMapping(value = "updatepatient/{id}")
-    public void updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
-        Patient p = patientRepo.getById(id);
-        p.setNom(patient.getNom());
-        p.setPrénom(patient.getPrénom());
-        patientRepo.save(p);
+    @ResponseBody
+    public ResponseEntity<String> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
+        Patient p = patientRepo.findById(id).orElse(null);
+        if (patient != null) {
+            p.setNom(patient.getNom());
+            p.setPrénom(patient.getPrénom());
+            p.setAdresse(patient.getAdresse());
+            p.setDateNaissance(patient.getDateNaissance());
+            p.setSexe(patient.getSexe());
+            p.setTéléphone(patient.getTéléphone());
+            patientRepo.save(p);
+            return ResponseEntity.ok("Patient updated successfully ! ");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

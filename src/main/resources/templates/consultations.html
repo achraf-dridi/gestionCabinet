@@ -28,7 +28,7 @@
         <div class="cardBox">
             <div id="card" class="card">
                 <div>
-                    <div class="numbers">New Patient</div>
+                    <div class="numbers">Créer une consultation</div>
                 </div>
 
                 <div class="iconBx">
@@ -49,16 +49,16 @@
         <div class="details">
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Patients List</h2>
+                    <h2>Consultations</h2>
                 </div>
 
                 <table>
                     <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>date naissance</td>
-                        <td>sexe</td>
-                        <td>adresse</td>
+                        <td>Patient</td>
+                        <td>Date Consultation</td>
+                        <td>Diagnostic</td>
+                        <td>Prescription</td>
                         <td>Actions</td>
                     </tr>
                     </thead>
@@ -71,7 +71,6 @@
                         <td th:text="${patient.adresse}"></td>
                         <td>
                             <input type="hidden" name="patientId" th:value="${patient.code}">
-                            <button class="btn view">View</button>
                             <button class="btn edit">Edit</button>
                             <button class="btn delete">Delete</button>
                         </td>
@@ -84,10 +83,6 @@
 </div>
 
 <!-- =========== Scripts =========  -->
-<script src="/js/patient/patient.js"></script>
-<script src="/js/patient/createPatient.js"></script>
-<script src="/js/patient/deletePatient.js"></script>
-<script src="/js/patient/updatePatient.js"></script>
 
 
 <!-- ====== ionicons ======= -->

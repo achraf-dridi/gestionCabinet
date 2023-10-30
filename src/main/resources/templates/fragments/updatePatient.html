@@ -1,0 +1,36 @@
+<!-- Fenêtre modale pour la modification -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeSpan">&times;</span>
+        <h2>Modifier le Patient</h2>
+        <form id="patient-form">
+            <!-- Les champs de modification ici -->
+
+            <input type="hidden" id="code" name="code">
+
+            <label for="nom">Nom:</label>
+            <input type="text" id="nom" name="nom">
+
+            <label for="prenom">Prénom:</label>
+            <input type="text" id="prenom" name="prenom">
+
+            <label for="dateNaissance">Date Naissance:</label>
+            <input type="date" id="dateNaissance" name="dateNaissance">
+
+            <label for="sexe">Sexe:</label>
+            <input type="text" id="sexe" name="sexe"  pattern="[HF]" title="Please enter 'H' or 'F'">
+
+            <label for="adresse">Adresse:</label>
+            <input type="text" id="adresse" name="adresse">
+
+            <label for="telephone">Téléphone:</label>
+            <input type="number" id="telephone" name="telephone">
+
+            <div id="buttonGroup">
+                <button type="submit">Save</button>
+                <button type="button" id="cancelButton">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+</div>
