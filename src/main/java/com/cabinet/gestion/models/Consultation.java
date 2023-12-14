@@ -18,6 +18,7 @@ public class Consultation {
     private Patient patient;
 
     @ManyToOne
+    @JoinColumn(name = "traitement_code")
     private Traitement traitement;
 
     @Lob
