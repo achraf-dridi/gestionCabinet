@@ -10,6 +10,6 @@ ENV POSTGRES_PASSWORD=root
 EXPOSE 5432
 
 # Build docker image
-# docker build tag_image .
+# docker build -t tag_image .
 # Run the docker container
 # docker run -p 5432:5432 --name nom_conteneur -d (detached mode )

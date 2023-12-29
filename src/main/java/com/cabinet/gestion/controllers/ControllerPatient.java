@@ -1,8 +1,9 @@
 package com.cabinet.gestion.controllers;
 
 import com.cabinet.gestion.models.Patient;
-import com.cabinet.gestion.repositories.PatientRepo;
+import com.cabinet.gestion.services.PatientServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,49 +14,42 @@ import java.util.List;
 public class ControllerPatient {
 
     @Autowired
-    private PatientRepo patientRepo;
+    private PatientServices patientServices;
 
     @PostMapping(value = "/createpatient")
-    public String createPatient(@RequestBody Patient patient) {
-        patientRepo.save(patient);
-        return "Patient created successfully";
+    public ResponseEntity<String> createPatient(@RequestBody Patient patient) {
+        try {
+            patientServices.createPatient(patient);
+            return new ResponseEntity<>("Object saved successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            // If an exception occurs during the save operation
+            String errorMessage = "Error saving object: " + e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping(value = "/patients")
     public List<Patient> getAllPatient() {
-        List<Patient> patients = patientRepo.findAll();
-        return patients;
+        return patientServices.getListPatient();
     }
 
-    @GetMapping(value = "/patient/{id}")
+    @GetMapping(value = "/patient/{code}")
     @ResponseBody
-    public Patient getPatient(@PathVariable Long id) {
-        return patientRepo.findById(id).orElse(null);
+    public Patient getPatient(@PathVariable Long code) {
+        return patientServices.getPatient(code);
     }
 
-    @DeleteMapping(value = "/deletepatient/{id}")
-    public void deletePatient(@PathVariable Long id) {
-        // Check if the patient with the given ID exists
-        if (patientRepo.existsById(id)) {
-            patientRepo.deleteById(id);
-        }
+    @DeleteMapping(value = "/deletepatient/{code}")
+    public void deletePatient(@PathVariable Long code) {
+        patientServices.deletePatient(code);
     }
 
-    @PutMapping(value = "updatepatient/{id}")
+    @PutMapping(value = "updatepatient/{code}")
     @ResponseBody
-    public ResponseEntity<String> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
-        Patient p = patientRepo.findById(id).orElse(null);
-        if (patient != null) {
-            p.setNom(patient.getNom());
-            p.setPrénom(patient.getPrénom());
-            p.setAdresse(patient.getAdresse());
-            p.setDateNaissance(patient.getDateNaissance());
-            p.setSexe(patient.getSexe());
-            p.setTéléphone(patient.getTéléphone());
-            patientRepo.save(p);
+    public ResponseEntity<String> updatePatient(@PathVariable Long code, @RequestBody Patient patient) {
+        if (patientServices.updatePatient(code, patient))
             return ResponseEntity.ok("Patient updated successfully ! ");
-        } else {
+        else
             return ResponseEntity.notFound().build();
-        }
     }
 }
