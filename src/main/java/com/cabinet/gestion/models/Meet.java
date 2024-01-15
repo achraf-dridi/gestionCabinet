@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "rendez_vous")
-public class RendezVous {
+@Table(name = "meet")
+public class Meet {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDateTime dateHeureRendezVous;
+    private LocalDateTime meetHour;
     @ManyToOne
-    @JoinColumn(name = "patient_code")
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 }

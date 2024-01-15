@@ -1,10 +1,10 @@
 # Use the official PostgreSQL image from Docker Hub
-FROM postgres:latest
+FROM postgres:15-alpine
 
 # Set environment variables for PostgreSQL
-ENV POSTGRES_DB=gestionPatient
-ENV POSTGRES_USER=root
-ENV POSTGRES_PASSWORD=root
+ENV POSTGRES_DB=patient_management_system
+ENV POSTGRES_USER=pguser
+ENV POSTGRES_PASSWORD=pgpassword
 
 # Expose the default PostgreSQL port
 EXPOSE 5432

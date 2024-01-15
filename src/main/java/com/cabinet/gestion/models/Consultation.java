@@ -1,40 +1,42 @@
 package com.cabinet.gestion.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "consultations")
 public class Consultation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
-
-    private Date dateConsultation;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private Date consultationDate;
     @ManyToOne
-    @JoinColumn(name = "patient_code")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
-
     @ManyToOne
-    @JoinColumn(name = "traitement_code")
-    private Traitement traitement;
-
+    @JoinColumn(name = "traitement_id")
+    private Treatment treatment;
     @Lob
     private String diagnostic;
-
     @Lob
-    private String prescriptionMedicales;
-
-    private LocalDateTime heure;
+    private String medicalPrescription;
+    private LocalDateTime hour;
 
     @OneToOne
-    @JoinColumn(name = "rendez_vous_id")
-    private RendezVous rendezVous;
-
+    @JoinColumn(name = "meet_id")
+    private Meet meet;
     private String notes;
-
-    private BigDecimal montant_payé;
+    private BigDecimal paidAmount;
 
 }

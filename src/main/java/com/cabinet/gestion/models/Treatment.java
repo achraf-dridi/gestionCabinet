@@ -15,21 +15,20 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "traitements")
-public class Traitement {
+@Table(name = "treatments")
+public class Treatment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String description;
-
-    private BigDecimal montantTotal;
+    
+    private BigDecimal treatmentPrice;
 
     @OneToMany
     private List<Consultation> consultations;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
-
 }

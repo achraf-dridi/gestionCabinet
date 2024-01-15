@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ConsultationRepo extends JpaRepository<Consultation, Long> {
-    List<Consultation> findByPatientCode(Long codePatient);
+public interface ConsultationRepository extends JpaRepository<Consultation, Long> {
+    List<Consultation> findByPatientId(Long PatienId);
 
 }

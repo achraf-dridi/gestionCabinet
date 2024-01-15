@@ -16,12 +16,12 @@ import java.util.Date;
 @Table(name = "patients")
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
-    private String nom;
-    private String prénom;
-    private String adresse;
-    private char sexe;
-    private Date dateNaissance;
-    private int téléphone;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String lastName;
+    private String firstName;
+    private String address;
+    private char gender;
+    private Date birthday;
+    private int phone;
 }
